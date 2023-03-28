@@ -1,7 +1,10 @@
 const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan") // morgan pkg allows us to log activity in our app
+const { PORT } = require("./config")
+
 const postsRouter = require("./routes/posts")
+
 
 const { BadRequestError, NotFoundError } = require("./utils/errors")
 
@@ -29,8 +32,6 @@ app.use((err, req, res, next) => {
     })
 })
 
-const port = 3000
-
-app.listen(port, () => {
-    console.log(`Server listening on port ` + port)
-})  
+app.listen(PORT, () => {
+    console.log(`Server running http://localhost:${PORT}`)
+})
