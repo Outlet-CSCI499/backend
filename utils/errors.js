@@ -12,7 +12,7 @@ class BadRequestError extends ExpressError {
     }
 }
 
-class BadRequestError extends ExpressError {
+class UnauthorizedError extends ExpressError {
     constructor(message = "Unauthorized") {
         super(message, 401)
     }
@@ -20,14 +20,22 @@ class BadRequestError extends ExpressError {
 
 // 402 error not commonly found, has to do with payments but not relevant for our project
 
-class BadRequestError extends ExpressError {
+class ForbiddenError extends ExpressError {
     constructor(message = "Forbidden") {
         super(message, 403)
     }
 }
 
-class BadRequestError extends ExpressError {
+class NotFoundError extends ExpressError {
     constructor(message = "Not Found") {
         super(message, 404)
     }
+}
+
+module.exports = {
+    ExpressError,
+    BadRequestError,
+    UnauthorizedError,
+    ForbiddenError,
+    NotFoundError,
 }
