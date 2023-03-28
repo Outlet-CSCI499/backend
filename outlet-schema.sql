@@ -10,17 +10,8 @@ CREATE TABLE users (
     created_at         TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE forums (
-    id                SERIAL PRIMARY KEY,
-    title             TEXT NOT NULL,
-    description       TEXT NOT NULL,
-    user_id           INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    created_at        TIMESTAMP DEFAULT NOW()
-);
-
 CREATE TABLE posts (
     id                SERIAL PRIMARY KEY,
-    forum_id          INTEGER REFERENCES forums(id) ON DELETE CASCADE,
     post              TEXT NOT NULL,
     user_id           INTEGER REFERENCES users(id) ON DELETE CASCADE,
     vote              INTEGER,

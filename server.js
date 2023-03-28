@@ -13,7 +13,7 @@ const app = express()
 app.use(cors()) // enables cross-origin resource sharing for all origins that may not be on this port
 app.use(morgan("tiny")) // log request info
 app.use(express.json()) // parse incoming JSON request bodies
-
+const authRoutes = require("./routes/auth")
 
 app.use("/posts", postsRouter)
 
@@ -22,6 +22,8 @@ app.use("/posts", postsRouter)
 app.use((eq, res, next) => {
     return next(new NotFoundError())
 })
+
+app.use("/auth", authRoutes)
 
 app.use((err, req, res, next) => {
     const status = err.status || 500
