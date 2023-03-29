@@ -5,8 +5,6 @@ CREATE TABLE users (
     password           TEXT NOT NULL,
     email              TEXT NOT NULL UNIQUE CHECK (POSITION('@' IN email) > 1),
     profile_picture    TEXT,
-    pw_reset_token     TEXT,
-    pw_reset_token_exp TIMESTAMP,
     created_at         TIMESTAMP DEFAULT NOW()
 );
 
