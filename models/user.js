@@ -4,11 +4,34 @@ const { BCRYPT_WORK_FACTOR } = require("../config")
 const { UnauthorizedError, BadRequestError } = require("../utils/errors")
 
 class User {
+    // function to only return user info w/out password
+    static async makePublicUser(user) {
+        return {
+            id: user.id,
+            email: user.email,
+            first_name: user.first_name,
+            username: user.username,
+            created_at: user.created_at
+        }
+    }
+    
     static async login(credentials) {
         // users should submit email and password
         // if any of those fields are missing, throw an error
-
+        const requiredFields = ["password", "email"]
+        requiredFields.forEach(field => {
+            if(!credentials.hasOwnProperty(field)) {
+                throw new BadRequestError(`Missing ${field} in request body`)
+            }
+        })
         // lookup user in the db by email, if found compare the password
+        const user = await User.fetchUserByEmail(credentials.email)
+        if (user) {
+            const isValid = await bcrypt.compare(credentials.password, user.password)
+            if (isValid) {
+                return User.makePublicUser(user)
+            }
+        }
         // with password in the db, if a match return the user
 
         // if this fails, throw an error
@@ -60,7 +83,7 @@ class User {
         // return the user
         const user = result.rows[0]
 
-        return user
+        return User.makePublicUser(user)
     }
 
     static async fetchUserByEmail(email) {
