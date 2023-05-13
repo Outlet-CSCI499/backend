@@ -16,10 +16,11 @@ var options = {
 
 
 router.get("/news", async (req, res, next) => {
-  var articles;
+  
   axios.request(options).then(function (response) {
     console.log(response.data);
-    articles = response.data;
+    const articles = response.data;
+    res.status(200).json({ articles });
   }).catch(function (error) {
     console.error(error);
   });
