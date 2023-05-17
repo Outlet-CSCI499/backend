@@ -121,8 +121,7 @@ class Post {
   static async upvote(postId) {
     //upvote a specific post
     const query = `
-        INSERT INTO upvote (author_id, user_name)
-        VALUES ($1, $2)
+    UPDATE posts SET upvote = upvote+1 WHERE id = $1
     `;
     await db.query(query, [postId]);
   }
@@ -135,26 +134,25 @@ class Post {
     await db.query(query, [postId]);
   }
 
-  static async getReply(authorId) {
+  static async getReply(postId) {
     const query = `
-      SELECT author_id, title, body, upvote, downvote, created, edited
+      SELECT id, user_id, title, body, upvote, downvote, created, edited
       FROM posts
-      WHERE author_id = $1
-      ORDER BY created ASC
+      WHERE user_id = $1
     `;
-    const replies = await db.query(query, [authorId]);
-    return replies.rows.map(row => new Post(row));
+    const replies = await db.query(query, [postId]);
+    return replies.rows.map((row) => new Post(row));
   }
 
-  static async fetchReply(authorId) {
+  static async fetchReply(postId) {
     const query = `
-      SELECT id, author_id, title, body, upvote, downvote, created, edited
+      SELECT id, user_id, title, body, upvote, downvote, created, edited
       FROM posts
-      WHERE author_id = $1
+      WHERE user_id = $1
     `;
-    const result = await db.query(query, [authorId]);
+    const result = await db.query(query, [postId]);
     if (result.rows.length === 0) {
-      throw new NotFoundError(`Reply containing the ID ${authorId} not found`);
+      throw new NotFoundError(`Reply containing the ID ${postId} not found`);
     }
     return new Post(result.rows[0]);
   }
