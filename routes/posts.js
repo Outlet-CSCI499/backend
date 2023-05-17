@@ -91,9 +91,9 @@ router.patch("/:authorId", async (req, res, next) => {
 
 // Delete a specific post by a specific author
 router.delete("/:postId", async (req, res, next) => {
-  const authorId = req.params.postId;
+  const postId = req.params.postId;
   try {
-    const post = await Post.fetchPostByauthorId(authorId);
+    const post = await Post.fetchPostBypostId(postId);
     await post.removePost();
     res.status(204).json({ post });
   } catch (err) {
