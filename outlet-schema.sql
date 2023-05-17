@@ -16,7 +16,7 @@ CREATE TABLE posts (
     upvote            INTEGER,
     downvote          INTEGER,
     created           TIMESTAMP DEFAULT NOW(),
-    editied           TIMESTAMP DEFAULT NOW()
+    edited           TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE post_replies (
