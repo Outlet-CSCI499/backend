@@ -4,7 +4,8 @@ const morgan = require("morgan") // morgan pkg allows us to log activity in our 
 const { PORT } = require("./config")
 const authRoutes = require("./routes/auth")
 const postsRouter = require("./routes/posts")
-
+const newsRouter = require("./routes/news")
+const repliesRouter = require("./routes/replies")
 const { NotFoundError } = require("./utils/errors")
 
 const app = express()
@@ -15,7 +16,8 @@ app.use(express.json()) // parse incoming JSON request bodies
 
 app.use("/auth", authRoutes)
 app.use("/posts", postsRouter)
-
+app.use("/news", newsRouter)
+app.use("/replies", repliesRouter)
 // if endpoint that user sends a http request to doesn't match any endpoints in our 
 // app, it will call this middleware which will call next function with a new not found error
 app.use((req, res, next) => {
