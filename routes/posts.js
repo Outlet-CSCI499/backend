@@ -9,7 +9,7 @@ const {
 } = require("../utils/errors");
 
 // Create a new post
-router.post("/posts", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   const { title, body, authorId } = req.body;
   try {
     const post = await Post.create({ title, body, authorId });
@@ -24,7 +24,7 @@ router.post("/posts", async (req, res, next) => {
 });
 
 // Get all posts from database
-router.get("/posts", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const allposts = await Post.find();
     res.status(200).json({ allposts });
@@ -34,7 +34,7 @@ router.get("/posts", async (req, res, next) => {
 });
 
 // aquire a specific post by author
-router.get("/posts/:authorId", async (req, res, next) => {
+router.get("/:authorId", async (req, res, next) => {
   const { authorId } = req.params.authorId;
   try {
     const post = await Post.fetchPostByauthorId(authorId);
@@ -49,7 +49,7 @@ router.get("/posts/:authorId", async (req, res, next) => {
 });
 
 // edit a specific post by a specific author
-router.patch("/posts/:authorId", async (req, res, next) => {
+router.patch("/:authorId", async (req, res, next) => {
   const author = req.params.authorId;
   const { title, body, authorId } = req.body;
   try {
@@ -90,7 +90,7 @@ router.patch("/posts/:authorId", async (req, res, next) => {
 // });
 
 // Delete a specific post by a specific author
-router.delete("/posts/:postId", async (req, res, next) => {
+router.delete("/:postId", async (req, res, next) => {
   const authorId = req.params.postId;
   try {
     const post = await Post.fetchPostByauthorId(authorId);
@@ -136,7 +136,7 @@ router.delete("/posts/:postId", async (req, res, next) => {
 // });
 
 // Upvote a specific post by a specific author
-router.post("/posts/:postId/upvote", async (req, res, next) => {
+router.post("/:postId/upvote", async (req, res, next) => {
   const postId = req.params.postId;
   try {
     const post = await Post.fetchPostBypostId(postId);
@@ -152,7 +152,7 @@ router.post("/posts/:postId/upvote", async (req, res, next) => {
 });
 
 // Downvote a specific post by a specific author
-router.post("/posts/:postId/downvote", async (req, res, next) => {
+router.post("/:postId/downvote", async (req, res, next) => {
   const postId = req.params.postId;
   try {
     const post = await Post.fetchPostBypostId(postId);
