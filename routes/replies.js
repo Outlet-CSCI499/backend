@@ -4,7 +4,7 @@ const { BadRequestError, UnauthorizedError, NotFoundError } = require('../utils/
 const Post = require('../models/posts');
 
 // Get all replies for a post
-router.get("/replies/:authorId", async (req, res, next) => {
+router.get("/posts/:authorId", async (req, res, next) => {
   try {
     const { authorId } = req.params;
     const post = await Post.fetchPostByauthorId(authorId);
@@ -19,7 +19,7 @@ router.get("/replies/:authorId", async (req, res, next) => {
 });
 
 // Create a new reply for a post
-router.post("/replies", async (req, res, next) => {
+router.post("/posts", async (req, res, next) => {
     const {title, body, authorId} = req.body;
     try {
         const post = await Post.fetchPostByauthorId(authorId);
@@ -36,7 +36,7 @@ router.post("/replies", async (req, res, next) => {
   });
 
 // Update a specific reply by a specific author
-router.patch("/replies/:postId", async (req, res, next) => {
+router.patch("/posts/:postId", async (req, res, next) => {
   const author = req.params.postId;
   const {title, body, authorId} = req.body;
   try {
@@ -58,7 +58,7 @@ router.patch("/replies/:postId", async (req, res, next) => {
 });
 
 // Delete a specific reply by a specific author
-router.delete("/replies/:postId", async (req, res, next) => {
+router.delete("/posts/:postId", async (req, res, next) => {
   const authorId = req.params.postId;
   try {
     const reply = await Post.fetchReply(authorId);
