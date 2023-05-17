@@ -1,12 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { BadRequestError, UnauthorizedError, NotFoundError } = require('../utils/errors');
-const Post = require('../models/posts');
+const { BadRequestError, UnauthorizedError, NotFoundError } = require("../utils/errors");
+const Post = require("../models/posts");
 
 // Get all replies for a post
 router.get("/posts/:authorId", async (req, res, next) => {
   try {
-    const { authorId } = req.params;
+    const { authorId } = req.params.authorId;
     const post = await Post.fetchPostByauthorId(authorId);
     const replies = await Post.getReplies(authorId);
     if (!authorId){
