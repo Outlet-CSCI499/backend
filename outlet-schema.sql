@@ -10,10 +10,13 @@ CREATE TABLE users (
 
 CREATE TABLE posts (
     id                SERIAL PRIMARY KEY,
-    post              TEXT NOT NULL,
+    title             TEXT NOT NULL,
+    body              TEXT NOT NULL,
     user_id           INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    vote              INTEGER,
-    created_at        TIMESTAMP DEFAULT NOW()
+    upvote            INTEGER,
+    downvote          INTEGER,
+    created           TIMESTAMP DEFAULT NOW(),
+    editied           TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE post_replies (
