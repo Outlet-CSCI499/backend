@@ -32,3 +32,5 @@ router.get("/news", async (req, res, next) => {
       console.error(error);
     });
 });
+
+module.exports = router
